@@ -61,3 +61,4 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+**/gradle-daemon-jvm.properties
