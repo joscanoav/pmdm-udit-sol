@@ -6,6 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -25,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.delay
 
 
@@ -129,26 +133,66 @@ val catalogoHamburguesas = listOf(
 // (por eso se llama "lazy", perezoso): es eficiente aunque la
 // lista tenga cientos de elementos.
 // ===========================================================
+//@Composable
+//fun CatalogoHamburguesas(productos: List<Producto>) {
+//
+//    LazyColumn(
+//        modifier = Modifier.fillMaxSize(),
+//        contentPadding = PaddingValues(16.dp),            // margen alrededor de toda la lista
+//        verticalArrangement = Arrangement.spacedBy(16.dp)  // espacio entre una tarjeta y la siguiente
+//    ) {
+//
+//        // items() recorre la lista de productos y, por cada uno,
+//        // dibuja una TarjetaProducto. Es como un "for" pero pensado
+//        // para listas que se muestran en pantalla.
+//        items(productos) { producto ->
+//
+//            TarjetaProducto(producto)
+//
+//        }
+//    }
+//}
+// ===========================================================
+// CATÁLOGO RESPONSIVE (RETO 2)
+// LazyVerticalGrid: Se adapta al ancho de la pantalla.
+// Si es estrecha (móvil), pondrá 1 columna. Si es ancha (Tablet),
+// pondrá 2, 3 o las que quepan.
+// ===========================================================
+//@Composable
+//fun CatalogoHamburguesas(productos: List<Producto>) {
+//
+//    LazyVerticalGrid(
+//        // LA CLAVE: GridCells.Adaptive calcula solas las columnas
+//        // indicando que cada tarjeta debe medir al menos 160.dp
+//        columns = GridCells.Adaptive(minSize = 160.dp),
+//
+//        modifier = Modifier.fillMaxSize(),
+//        contentPadding = PaddingValues(16.dp),
+//        verticalArrangement = Arrangement.spacedBy(16.dp),
+//        horizontalArrangement = Arrangement.spacedBy(16.dp) // Añadido para el hueco horizontal entre columnas
+//    ) {
+//        items(productos) { producto ->
+//            TarjetaProducto(producto)
+//        }
+//    }
+//}
+
 @Composable
 fun CatalogoHamburguesas(productos: List<Producto>) {
+    LazyVerticalGrid(
+        // CAMBIO AQUÍ: Subimos a 250.dp para que en móvil vertical solo quepa 1
+        columns = GridCells.Adaptive(minSize = 250.dp),
 
-    LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),            // margen alrededor de toda la lista
-        verticalArrangement = Arrangement.spacedBy(16.dp)  // espacio entre una tarjeta y la siguiente
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-
-        // items() recorre la lista de productos y, por cada uno,
-        // dibuja una TarjetaProducto. Es como un "for" pero pensado
-        // para listas que se muestran en pantalla.
         items(productos) { producto ->
-
             TarjetaProducto(producto)
-
         }
     }
 }
-
 
 // ===========================================================
 // TARJETA DE PRODUCTO
@@ -186,7 +230,9 @@ fun TarjetaProducto(producto: Producto) {
                 Text(
                     text = producto.nombre,
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    //maxLines = 1,                              // NUEVO: Fuerza a 1 línea
+                    //overflow = TextOverflow.Ellipsis           // NUEVO: Añade "..." si no cabe
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))   // hueco pequeño
