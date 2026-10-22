@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import kotlinx.coroutines.delay
 
 
@@ -231,8 +232,8 @@ fun TarjetaProducto(producto: Producto) {
                     text = producto.nombre,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    //maxLines = 1,                              // NUEVO: Fuerza a 1 línea
-                    //overflow = TextOverflow.Ellipsis           // NUEVO: Añade "..." si no cabe
+                    maxLines = 1,                              // NUEVO: Fuerza a 1 línea
+                    overflow = Ellipsis           // NUEVO: Añade "..." si no cabe
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))   // hueco pequeño
